@@ -1,0 +1,61 @@
+def get_float(prompt, low, high):
+    while True:
+        try:
+            number = float(input(prompt))
+            if low < number <= high:
+                return number
+            else:
+                print(f"Entry must be greater than {low} and less than or equal to {high}. Please try again.")
+        except ValueError:
+            print("Invalid input. Please enter a valid number.")
+
+def get_int(prompt, low, high):
+    while True:
+        try:
+            number = int(input(prompt))
+            if low < number <= high:
+                return number
+            else:
+                print(f"Entry must be greater than {low} and less than or equal to {high}. Please try again.")
+        except ValueError:
+            print("Invalid input. Please enter a valid integer.")
+
+def calculate_future_value(monthly_investment, yearly_interest_rate, years):
+    monthly_interest_rate = (yearly_interest_rate / 100) / 12
+    months = years * 12
+
+    future_value = 0
+
+    for _ in range(months):
+        future_value = (future_value + monthly_investment) * (1 + monthly_interest_rate)
+
+    return future_value
+
+def display_investment_summary(monthly_investment, yearly_interest_rate, years, future_value):
+    
+    print("\nInvestment Summary")
+    print("-------------------")
+    print(f"Monthly Investment: ${monthly_investment:,.2f}")
+    print(f"Yearly Interest Rate: {yearly_interest_rate:.2f}%")
+    print(f"Investment Duration: {years} years")
+    print(f"Future Value: ${future_value:,.2f}\n")
+
+def main():
+    print("Welcome to the Future Investment Value Calculator")
+    print("------------------------------------------------")
+
+    while True:
+        monthly_investment = get_float("Enter monthly investment (e.g., 100): ", 0, 10000)
+        yearly_interest_rate = get_float("Enter yearly interest rate (e.g., 5 for 5%): ", 0, 100)
+        years = get_int("Enter number of years (e.g., 10): ", 0, 50)
+
+        future_value = calculate_future_value(monthly_investment, yearly_interest_rate, years)
+        display_investment_summary(monthly_investment, yearly_interest_rate, years, future_value)
+
+        choice = input("Would you like to calculate again? (y/n): ").strip().lower()
+        if choice != 'y':
+            print("Thank you for using the Investment Calculator. Goodbye!")
+            break
+
+if __name__ == "__main__":
+    main()
