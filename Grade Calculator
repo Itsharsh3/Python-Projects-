@@ -1,0 +1,71 @@
+programName = "Grade Calculator"
+developerName = "Harsh Patel"
+instruction = "Enter \"exit\" to end the program"
+
+print(f"Program: {programName}\n"
+      f"Developer: {developerName}\n"
+      f"Instruction: {instruction}"
+      f"\n")
+
+scores = []
+weights = []
+components = ['test', 'quiz', 'project']  
+
+total_weight = 0
+for component in components:
+    while True:
+        try:
+            weight = float(input(f"Enter weight for {component} (as percentage, e.g., 40 for 40%): "))
+            if weight <= 0 or weight > 100:
+                print("Please enter a valid weight between 0 and 100.")
+                continue
+            weights.append(weight)
+            total_weight += weight
+            break
+        except ValueError:
+            print("Please enter a valid number for weight.")
+
+if total_weight != 100:
+    print("Total weight of components must equal 100%. Exiting program.")
+    exit()
+
+for component in components:
+    while True:
+        str_score = input(f"Enter {component} score (or \"exit\" to quit): ")
+
+        if str_score.lower() == "exit":
+            break
+        
+        try:
+            score = float(str_score)
+            if score < 0 or score > 100:
+                print("Score must be between 0 and 100. Try again.\n")
+                continue
+            scores.append(score)
+            break
+        except ValueError:
+            print("Invalid input. Please enter a valid number for the score.")
+
+    if str_score.lower() == "exit":
+        break
+
+if len(scores) == len(weights):  # Ensure scores and weights match
+    weighted_sum = sum([score * weight / 100 for score, weight in zip(scores, weights)])
+    print(f"\nYour weighted average score is: {weighted_sum:.2f}")
+
+    if weighted_sum >= 90:
+        letterGrade = "A"
+    elif weighted_sum >= 80:
+        letterGrade = "B"
+    elif weighted_sum >= 70:
+        letterGrade = "C"
+    elif weighted_sum >= 60:
+        letterGrade = "D"
+    else:
+        letterGrade = "F"
+
+    print(f"Your final letter grade is: {letterGrade}")
+else:
+    print("Error: The number of scores doesn't match the number of components.")
+
+print("Okay, bye!")
